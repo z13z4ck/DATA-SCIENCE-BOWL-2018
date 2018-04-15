@@ -19,10 +19,11 @@ np.random.seed = seed
 # Data Path
 TRAIN_PATH = 'data/stage1_train/'
 TEST_PATH = 'data/stage1_test/'
+TEST2_PATH = r'data/stage2_test_final/'
 
 # Get train and test IDs
 train_ids = next(os.walk(TRAIN_PATH))[1]
-test_ids = next(os.walk(TEST_PATH))[1]
+test_ids = next(os.walk(TEST2_PATH))[1]
 
 # Function read train images and mask return as nump array
 def read_train_data(IMG_WIDTH=256,IMG_HEIGHT=256,IMG_CHANNELS=3):
@@ -66,8 +67,13 @@ def read_test_data(IMG_WIDTH=256,IMG_HEIGHT=256,IMG_CHANNELS=3):
         return X_test,sizes_test
     b = Progbar(len(test_ids))
     for n, id_ in enumerate(test_ids):
-        path = TEST_PATH + id_
-        img = imread(path + '/images/' + id_ + '.png')[:,:,:IMG_CHANNELS]
+        path = TEST2_PATH + id_
+        # print(id_)
+        try:
+            img = imread(str(path) + r'/images/' + str(id_) + r'.png')[:,:,:IMG_CHANNELS]
+        except IndexError:
+            print('\n' + id_)
+            pass
         sizes_test.append([img.shape[0], img.shape[1]])
         img = resize(img, (IMG_HEIGHT, IMG_WIDTH), mode='constant', preserve_range=True)
         X_test[n] = img

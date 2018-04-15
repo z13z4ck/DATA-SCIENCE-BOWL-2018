@@ -35,6 +35,6 @@ test_ids,rles = mask_to_rle(test_mask_upsampled)
 sub = pd.DataFrame()
 sub['ImageId'] = test_ids
 sub['EncodedPixels'] = pd.Series(rles).apply(lambda x: ' '.join(str(y) for y in x))
-sub.to_csv('sub-dsbowl2018.csv', index=False)
+sub.to_csv('submission_stage2.csv', index=False)
 
 print("Data saved")
